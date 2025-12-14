@@ -14,9 +14,9 @@ const config = JSON.parse(
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY 
- );  
-}
- )
+});  
+
+} 
 // Discord client setup
 const client = new Client({
   intents: [
@@ -24,7 +24,7 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildVoiceStates,
     GatewayIntentBits.MessageContent
-  )],
+  ),
   partials: [Partials.Channel]
 });
 
