@@ -181,5 +181,10 @@ client.on("messageCreate", async (message) => {
     const song = output.replace("ACTION:play", "").trim();
     joinChannel(message);
     setTimeout(() => playSpecific(message, song), 500);
+
+    client.once("ready", () => {
+  console.log(`Logged in as ${client.user.tag}`);
+});
+client.login(process.env.DISCORD_BOT_TOKEN);
   }  
  });
