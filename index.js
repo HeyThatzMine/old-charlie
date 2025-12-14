@@ -13,7 +13,7 @@ const config = JSON.parse(
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
-}
+})
 
 // Discord client setup
 const client = new Client({
@@ -24,7 +24,7 @@ const client = new Client({
     GatewayIntentBits.MessageContent
   ],
   partials: [Partials.Channel]
-};
+});
 
 // Music player state
 let playlist = [];
