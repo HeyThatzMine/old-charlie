@@ -1,49 +1,52 @@
-import { google } from "googleapis";
-import fetch from "node-fetch";
-import { charliepersonality } from "./charliepersonality.js";
 import fs from "fs";
 import path from "path";
+import fetch from "node-fetch";
 
-// Loads config
+// Load config
 const config = JSON.parse(
   fs.readFileSync(path.resolve("config.json"), "utf8")
 );
 
 const DRIVE_FOLDER_ID = config.driveFolderId;
 
-// Google Drive client setup (no auth needed for public folder)
-const drive = google.drive({
-  version: "v3",
-  auth: undefined
-});
-
+/**
+ * Public Google Drive folder scan (no API)
+ * Uses Drive "folder contents" endpoint
+ */
 export async function scanDriveForMP3s() {
   try {
-    const response = await drive.files.list({
-      q: `'${DRIVE_FOLDER_ID}' in parents and mimeType='audio/mpeg'`,
-      fields: "files(id, name)"
-    });
+    const url =
+      `https://www.googleapis.com/drive/v3/files` +
+      `?q='${DRIVE_FOLDER_ID}'+in+parents+and+mimeType='audio/mpeg'` +
+      `&fields=files(id,name)` +
+      `&supportsAllDrives=true`;
 
-    const files = response.data.files || [];
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Drive request failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const files = data.files || [];
 
     if (!files.length) {
-      console.log("⚠️ Old Charlie: No MP3 files found in the Drive folder.");
+      console.log("⚠️ Old Charlie: No MP3 files found.");
       return [];
     }
 
-    // Convert file IDs into preview streaming URLs
     const playlist = files.map(file => ({
-      title: file.name.replace(".mp3", "").trim(),
+      title: file.name.replace(/\.mp3$/i, "").trim(),
       url: `https://drive.google.com/uc?export=preview&id=${file.id}`
-    };
+    }));
 
-    console.log("🎵 Old Charlie found the following tracks:");
-    playlist.forEach(track => console.log(`- ${track.title}`));
+    console.log("🎵 Old Charlie found tracks:");
+    playlist.forEach(t => console.log(`- ${t.title}`));
 
     return playlist;
 
   } catch (err) {
-    console.error("❌ Error scanning Google Drive:", err.message);
+    console.error("❌ Drive scan error:", err.message);
     return [];
   }
-};
+}
