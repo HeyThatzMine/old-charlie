@@ -46,4 +46,4 @@ export async function scanDriveForMP3s() {
     console.error("❌ Error scanning Google Drive:", err.message);
     return [];
   }
-});
+};
