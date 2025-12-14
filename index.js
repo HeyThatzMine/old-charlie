@@ -2,8 +2,8 @@ import "dotenv/config";
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus, NoSubscriberBehavior } from "@discordjs/voice";
 import { OpenAI } from "openai";
-import { scanDriveForMP3s } from "./driveScanner.js";
-import { charliePersonality } from "./charliePersonality.js";
+import { scanDriveForMP3s } from "./drivescanner.js";
+import { charliePersonality } from "./charliepersonality.js";
 import fs from "fs";
 import path from "path";
 
@@ -105,7 +105,7 @@ function joinChannel(message) {
     adapterCreator: message.guild.voiceAdapterCreator
   });
 
-  message.reply(randomLine(charliePersonality.joiningVoice));
+  message.reply(randomLine(charliepersonality.joiningVoice));
 }
 
 // PLAY A SPECIFIC TRACK
@@ -127,7 +127,7 @@ function playSpecific(message, songName) {
 
   if (voiceConnection) voiceConnection.subscribe(audioPlayer);
 
-  message.reply(`${randomLine(charliePersonality.playingSpecific)} **${match.title}**`);
+  message.reply(`${randomLine(charliepersonality.playingSpecific)} **${match.title}**`);
 }
 
 // PLAY RANDOM TRACK
@@ -142,19 +142,19 @@ function playRandom(message) {
 
   if (voiceConnection) voiceConnection.subscribe(audioPlayer);
 
-  message.reply(`${randomLine(charliePersonality.randomPlay)} **${track.title}**`);
+  message.reply(`${randomLine(charliepersonality.randomPlay)} **${track.title}**`);
 }
 
 // SKIP
 function skipTrack(message) {
   audioPlayer.stop();
-  message.reply(randomLine(charliePersonality.skipping));
+  message.reply(randomLine(charliepersonality.skipping));
 }
 
 // STOP
 function stopMusic(message) {
   audioPlayer.stop();
-  message.reply(randomLine(charliePersonality.stopping));
+  message.reply(randomLine(charliepersonality.stopping));
 }
 
 // LEAVE
@@ -162,7 +162,7 @@ function leaveChannel(message) {
   if (voiceConnection) {
     voiceConnection.destroy();
     voiceConnection = null;
-    message.reply(randomLine(charliePersonality.leavingVoice));
+    message.reply(randomLine(charliepersonality.leavingVoice));
   }
 }
 
