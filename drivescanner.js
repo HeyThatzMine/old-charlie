@@ -1,6 +1,6 @@
 import { google } from "googleapis";
 import fetch from "node-fetch";
-import { charliePersonality } from "./charliePersonality.js";
+import { charliepersonality } from "./charliepersonality.js";
 import fs from "fs";
 import path from "path";
 
