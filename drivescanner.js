@@ -35,7 +35,7 @@ export async function scanDriveForMP3s() {
     const playlist = files.map(file => ({
       title: file.name.replace(".mp3", "").trim(),
       url: `https://drive.google.com/uc?export=preview&id=${file.id}`
-    }));
+    });
 
     console.log("🎵 Old Charlie found the following tracks:");
     playlist.forEach(track => console.log(`- ${track.title}`));
