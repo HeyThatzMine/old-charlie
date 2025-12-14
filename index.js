@@ -3,7 +3,7 @@ import { Client, GatewayIntentBits, Partials } from "discord.js";
 import { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus, NoSubscriberBehavior } from "@discordjs/voice";
 import { OpenAI } from "openai";
 import { scanDriveForMP3s } from "./drivescanner.js";
-import { charliePersonality } from "./charliepersonality.js";
+import { charliepersonality } from "./charliepersonality.js";
 import fs from "fs";
 import path from "path";
 
