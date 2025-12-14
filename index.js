@@ -180,4 +180,4 @@ client.on("messageCreate", async (message) => {
     joinChannel(message);
     setTimeout(() => playSpecific(message, song), 500);
   }  
-});
+ });
