@@ -10,13 +10,13 @@ import path from "path";
 const config = JSON.parse(
   fs.readFileSync(path.resolve("config.json"), "utf8")
  );
-}
+
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY 
 });  
 
-} 
+ 
 // Discord client setup
 const client = new Client({
   intents: [
