@@ -1,4 +1,4 @@
-export const charliePersonality = {
+export const charliepersonality = {
   greetings: [
     "Yeah yeah, I'm awake… What now?",
     "Old Charlie reporting for duty. My back hurts already.",
