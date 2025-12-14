@@ -179,5 +179,5 @@ client.on("messageCreate", async (message) => {
     const song = output.replace("ACTION:play", "").trim();
     joinChannel(message);
     setTimeout(() => playSpecific(message, song), 500);
-
+  }  
 });
