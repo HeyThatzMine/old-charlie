@@ -1,7 +1,9 @@
+console.log("BOOT: index.js started");
+
+
 import "dotenv/config";
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus, NoSubscriberBehavior } from "@discordjs/voice";
-import { OpenAI } from "openai";
 import { scanDriveForMP3s } from "./drivescanner.js";
 import { charliepersonality } from "./charliepersonality.js";
 import fs from "fs";
@@ -12,9 +14,6 @@ const config = JSON.parse(
  );
 
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY 
-});  
 
  
 // Discord client setup
@@ -23,7 +22,8 @@ const client = new Client({
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildVoiceStates,
-    GatewayIntentBits.MessageContent
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildPresences,
   ],
   partials: [Partials.Channel]
 });
@@ -149,6 +149,7 @@ function playRandom(message) {
 
 // SKIP
 function skipTrack(message) {
+
   audioPlayer.stop();
   message.reply(randomLine(charliepersonality.skipping));
 }
@@ -182,9 +183,19 @@ client.on("messageCreate", async (message) => {
     joinChannel(message);
     setTimeout(() => playSpecific(message, song), 500);
 
-    client.once("ready", () => {
-  console.log(`Logged in as ${client.user.tag}`);
+ };
+  })
+
+
+client.once("ready", () => {
+  console.log(`READY AS ${client.user.tag}`);
+  client.user.setPresence({
+    status: "online",
+    activities: [{ name: "haunting the mix bus 🎛️" }],
+  });
 });
-client.login(process.env.DISCORD_BOT_TOKEN);
-  }  
- });
+
+
+
+client.login(process.env.DISCORD_TOKEN);
+
