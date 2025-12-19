@@ -8,7 +8,12 @@ import { scanDriveForMP3s } from "./drivescanner.js";
 import { charliepersonality } from "./charliepersonality.js";
 import fs from "fs";
 import path from "path";
+import http from "http";
 
+http.createServer((req, res) => {
+  res.writeHead(200);
+  res.end("Charlie is haunting the server 🎛️");
+}).listen(process.env.PORT || 8080)
 const config = JSON.parse(
   fs.readFileSync(path.resolve("config.json"), "utf8")
  );
@@ -21,6 +26,7 @@ const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
     GatewayIntentBits.GuildVoiceStates
   ],
   partials: [Partials.Channel]
@@ -171,7 +177,7 @@ function leaveChannel(message) {
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
 
-  if (!shouldCharlieRespond(message)) return;
+//  if (!shouldCharlieRespond(message)) return;
 
   // Natural language interpretation
   const output = await interpretMessage(message);
