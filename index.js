@@ -15,11 +15,14 @@ client.once("ready", () => {
   console.log(`READY AS ${client.user.tag}`);
 });
 
-client.on("messageCreate", (message) => {
+client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
 
   console.log("HEARD:", message.content);
-  message.reply("I hear you.");
+
+  if (message.content.toLowerCase().includes("hello")) {
+    message.reply("I hear you. Loud and clear.");
+  }
 });
 
 client.login(process.env.DISCORD_TOKEN);
