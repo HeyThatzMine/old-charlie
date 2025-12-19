@@ -174,7 +174,9 @@ function leaveChannel(message) {
 }
 
 client.on("messageCreate", async (message) => {
- console.log("RAW MESSAGE EVENT:", {
+ console.log(" MESSAGE EVENT FIRED");
+
+ if ("message.author.bot") return;
    author: message.author7.tag,
    bot: message.author7.bot,
    content: message.content,
