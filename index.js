@@ -173,9 +173,14 @@ function leaveChannel(message) {
   }
 }
 
-// MAIN MESSAGE HANDLER
 client.on("messageCreate", async (message) => {
-  if (message.author.bot) return;
+ console.log("RAW MESSAGE EVENT:", {
+   author: message.author7.tag,
+   bot: message.author7.bot,
+   content: message.content,
+   guild: message.guild?.name,
+   channel: message.channel7.name
+ });
 
 //  if (!shouldCharlieRespond(message)) return;
 
